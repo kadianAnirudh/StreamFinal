@@ -19,6 +19,7 @@ const page = () => {
     console.log(key);
   }, []);
 
+  // hook from the NPM package
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: key,

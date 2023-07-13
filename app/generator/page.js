@@ -46,18 +46,21 @@ const page = () => {
   ]);
 
   // margin left for preview
-  const [widthNumber, setwidthNumber] = useState(`600`);
   const randomNumber = 600;
   const divRef = useRef(null);
 
+  // parameter is div
   const downloadPDF = async (div) => {
+    // jsPDF library prepares a plain page
     const doc = new jsPDF({
       orientation: "portrait",
       unit: "px",
       format: [400, 500],
     });
 
+    // each page is actually a div child and has a for loop to create as many canvas as the children
     const pages = div.children;
+
     for (let i = 0; i < pages.length; i++) {
       const page = pages[i];
       const canvas = await html2canvas(page, {
@@ -67,6 +70,7 @@ const page = () => {
       });
 
       // Convert canvas to JPEG data URL
+      // CORS was true because we deal with URL here
       const ImageData = canvas.toDataURL("image/jpeg", 0.7);
 
       // Add the JPEG image to the PDF
@@ -75,8 +79,7 @@ const page = () => {
         doc.addPage();
       }
     }
-
-    doc.save("myPDF.pdf");
+    doc.save("cortes.pdf");
   };
 
   function previewImageFunction(event) {
@@ -86,6 +89,7 @@ const page = () => {
       reader.onload = function () {
         setPreviewImage(reader.result);
       };
+      // Since the file is saved as a URL, CORS will be applied
       reader.readAsDataURL(file);
     }
   }
@@ -117,6 +121,7 @@ const page = () => {
     if (file && file.type.startsWith("image/")) {
       const reader = new FileReader();
       reader.onload = function () {
+        // pages is array of carousel pages
         const updatedPages = [...pages];
         updatedPages[index] = {
           ...updatedPages[index],
@@ -153,7 +158,8 @@ const page = () => {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center">
+    <div className="">
+      {/* heading text */}
       <header className="w-full flex justify-center items-center flex-col mt-10">
         <h1 className="head_text">
           Deliver Informative Content with
@@ -224,7 +230,12 @@ const page = () => {
                   {/* image contaning div */}
                   <div class="absolute inset-0 flex justify-center items-center">
                     <div class="h-48 w-48 mb-32">
-                      <Image src={previewImage} class="h-full w-full" />
+                      <Image
+                        src={previewImage}
+                        class="h-full w-full"
+                        w={300}
+                        h={200}
+                      />
                     </div>
                   </div>
                 </div>
@@ -304,7 +315,12 @@ const page = () => {
                 {/* section 2 with image container and image  */}
                 <div className="h-[200px] bg-blue-600 mt-4 ml-4 mr-4 flex justify-center items-center">
                   <div className="h-[180px] w-[340px]">
-                    <Image src={OneImage} className="h-full w-full" />
+                    <Image
+                      src={OneImage}
+                      className="h-full w-full"
+                      w={300}
+                      h={200}
+                    />
                   </div>
                 </div>
               </div>
@@ -405,8 +421,8 @@ const page = () => {
                       <Image
                         src={page.imageSource}
                         className="h-full w-full"
-                        width={150}
-                        height={90}
+                        w={300}
+                        h={200}
                       />
                     </div>
                   </div>
@@ -490,7 +506,12 @@ const page = () => {
                     {/* image contaning div */}
                     <div class="absolute inset-0 flex justify-center items-center">
                       <div class="h-48 w-48 mb-16 mt-2 ml-[200px]">
-                        <Image src={lastImage} class="h-full w-full" />
+                        <Image
+                          src={lastImage}
+                          class="h-full w-full"
+                          w={300}
+                          h={200}
+                        />
                       </div>
                     </div>
                   </div>
@@ -502,7 +523,7 @@ const page = () => {
       </div>
 
       {/* Preview section */}
-      <div className="hiddenbg-white py-8 flex-center justify-center mt-12 w-3/5">
+      <div className="hiddenbg-white py-8 flex-center justify-center mt-12 ">
         <div className="justify-center flex-center">
           <p className="text-3xl font-bold tracking-tight text-blue-600 sm:text-4xl text-center">
             Amazing Work!
@@ -537,7 +558,12 @@ const page = () => {
                     {/* image contaning div */}
                     <div class="absolute inset-0 flex justify-center items-center">
                       <div class="h-48 w-48 mb-32 coverImagePreview">
-                        <Image src={previewImage} class="h-full w-full" />
+                        <Image
+                          src={previewImage}
+                          class="h-full w-full"
+                          w={300}
+                          h={200}
+                        />
                       </div>
                     </div>
                   </div>
@@ -594,6 +620,8 @@ const page = () => {
                         <Image
                           src={page.imageSource}
                           className="h-full w-full"
+                          w={300}
+                          h={200}
                         />
                       </div>
                     </div>
@@ -619,7 +647,12 @@ const page = () => {
                       {/* image contaning div */}
                       <div class="absolute inset-0 flex justify-center items-center">
                         <div class="h-48 w-48 mb-16 mt-16 ml-[200px]">
-                          <Image src={lastImage} class="h-full w-full" />
+                          <Image
+                            src={lastImage}
+                            class="h-full w-full"
+                            w={300}
+                            h={200}
+                          />
                         </div>
                       </div>
                     </div>

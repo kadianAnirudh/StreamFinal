@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { tick} from "../assets";
+import { tick } from "../assets";
 import Image from "next/image";
 import axios from "axios";
 
@@ -10,11 +10,14 @@ const Demo = () => {
   const [completedSentence, setCompletedSentence] = useState("");
 
   // API key needs to be filled to run the program
-  const API_KEY = "";
+  const API_KEY = "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";
 
   const fetchData = async (input) => {
     const response = await axios.post(
+      // request URL
       "https://api.openai.com/v1/completions",
+      // payload
+      // documentation: https://platform.openai.com/docs/api-reference/completions/create
       {
         prompt: `You are a customer support specialist at Stream, getstream.io, help the customer with their query: 
         "${input}"`,
@@ -31,7 +34,8 @@ const Demo = () => {
       }
     );
 
-    return response.data.choices[0].text;
+    // return response.data.choices[0].text;
+    return response.data.choices;
   };
 
   // function with which API requests will be made
@@ -79,9 +83,17 @@ const Demo = () => {
         </form>
 
         {completedSentence && (
-          <div className="result-container mt-10 ">
+          <div className="result-container mt-10 w-full">
             <h3 className="">Solution:</h3>
-            <p>{completedSentence}</p>
+
+            {/* <p>{completedSentence[0].text}</p> */}
+
+            {completedSentence.map((comp) => (
+              <div className="flex my-2">
+                <p className="mx-2">{completedSentence.indexOf(comp) + 1}</p>
+                <p>{comp.text}</p>
+              </div>
+            ))}
           </div>
         )}
       </div>

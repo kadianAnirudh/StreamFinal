@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@clerk/nextjs": "^4.21.12",
+    "@clerk/nextjs": "^4.21.13",
     "@nextui-org/react": "^1.0.0-beta.13",
     "@react-google-maps/api": "^2.18.1",
     "@reduxjs/toolkit": "^1.9.5",
