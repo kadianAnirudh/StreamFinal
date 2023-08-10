@@ -10,14 +10,10 @@ const Demo = () => {
   const [completedSentence, setCompletedSentence] = useState("");
 
   // API key needs to be filled to run the program
-  const API_KEY = "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";
-
   const fetchData = async (input) => {
     const response = await axios.post(
       // request URL
       "https://api.openai.com/v1/completions",
-      // payload
-      // documentation: https://platform.openai.com/docs/api-reference/completions/create
       {
         prompt: `You are a customer support specialist at Stream, getstream.io, help the customer with their query: 
         "${input}"`,
@@ -29,7 +25,7 @@ const Demo = () => {
       {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${API_KEY}`,
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_OPENAI_API_KEY}`,
         },
       }
     );
@@ -86,14 +82,7 @@ const Demo = () => {
           <div className="result-container mt-10 w-full">
             <h3 className="">Solution:</h3>
 
-            {/* <p>{completedSentence[0].text}</p> */}
-
-            {completedSentence.map((comp) => (
-              <div className="flex my-2">
-                <p className="mx-2">{completedSentence.indexOf(comp) + 1}</p>
-                <p>{comp.text}</p>
-              </div>
-            ))}
+            <p>{completedSentence[0].text}</p>
           </div>
         )}
       </div>

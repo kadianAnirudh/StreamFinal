@@ -17,7 +17,6 @@ const Navbar = async () => {
               className="mr-3 h-full"
               alt="Stream Logo"
               priority
-              onClick={console.log(currentUser())}
             />
           </Link>
 
